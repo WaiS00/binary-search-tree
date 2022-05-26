@@ -10,7 +10,7 @@ public class BinarySearchTreeImplementation extends BinarySearchTree{
 				Scanner myObj = new Scanner(System.in);
 				System.out.println("\nEnter Int");
 				int number = myObj.nextInt();  
-				tree.add(number);
+				tree.addValue(number);
 			}
 	
 			tree.display();
@@ -18,12 +18,12 @@ public class BinarySearchTreeImplementation extends BinarySearchTree{
 			System.out.println();
 
 			// method to show maximum value in the tree
-			Node maxNode = tree.maxNode();
-			System.out.println("Max value : " + maxNode.key);
+			Node maxNumber = tree.maxNumber();
+			System.out.println("Max value : " + maxNumber.keyValue);
 
 			// method to show minimum value in the tree
-			Node minNode = tree.minNode();
-			System.out.println("Min value : " + minNode.key);
+			Node minNumber = tree.minNumber();
+			System.out.println("Min value : " + minNumber.keyValue);
 			
 			Scanner myObj = new Scanner(System.in);
 			
@@ -31,11 +31,11 @@ public class BinarySearchTreeImplementation extends BinarySearchTree{
 			System.out.println("\nEnter an integer to check does it exist: ");
 			int number = myObj.nextInt();  
 			//find number in the tree
-			Node node1 = tree.find(number);
+			Node node1 = tree.findValue(number);
 
-			if(number == node1.key){
+			if(number == node1.keyValue){
 				// if number that is entered == the node number from the tree, it will display that the number exist in the tree
-				System.out.println("The number " + node1.key + " exist in the tree");
+				System.out.println("The number " + node1.keyValue + " exist in the tree");
 			}
 			else{
 				// if number that is entered != the node number from the tree, it will display that the number does not exist in the tree
@@ -47,12 +47,12 @@ public class BinarySearchTreeImplementation extends BinarySearchTree{
 			System.out.println("\nEnter Int to delete from the tree");
 			int number2 = myObj1.nextInt();  
 			// find the value in the tree
-			Node del1 = tree.find(number2);
+			Node del1 = tree.findValue(number2);
 
 			// if number that is entered is in the tree, it will remove the value and display the tree after the deletion of value
-			if(number2 == del1.key){
-				tree.remove(number2);
-				System.out.println(del1.key);
+			if(number2 == del1.keyValue){
+				tree.removeValue(number2);
+				System.out.println(del1.keyValue);
 				tree.display();
 			}
 			else{
