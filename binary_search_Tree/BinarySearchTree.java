@@ -66,6 +66,7 @@ public class BinarySearchTree{
 		}
 	}
 
+
 	//function to find the next greater element from the given data value.
 	public static Node next(int data){
 		System.out.println("Find Next of : " + data);
@@ -110,6 +111,35 @@ public class BinarySearchTree{
 	}
 	
 
+	protected static Node remove(int data){
+		System.out.println("Remove : " + data);
+		Node node = find(data);
+		if(node.right==null){
+			if(root==node){
+				root=node.left;
+				return node;
+			}
+			if(node.parent.left==node){
+				node.parent.left=node.left;
+			}
+			else{
+				node.parent.right=node.left;
+			}
+			return node;
+		}
+		
+		else{
+			Node temp = next(data);
+			node.key=temp.key;
+			if(temp.parent.left==temp){
+				temp.parent.left=temp.right;
+			}
+			if(temp.parent.right==temp){
+				temp.parent.right=temp.right;
+			}
+		}
+		return node;
+	}
 
 	//function to find the max data value in the tree.
 	public static Node maxNode(){
@@ -172,11 +202,11 @@ public class BinarySearchTree{
 		inorderTraversal(root);
 
 		System.out.println();
-		System.out.println("PreOrder Traversal");
+		System.out.println("\nPreOrder Traversal");
 		preorderTraversal(root);
 
 		System.out.println();
-		System.out.println("PostOrder Traversal");
+		System.out.println("\nPostOrder Traversal");
 		postorderTraversal(root);
 
 		System.out.println();
