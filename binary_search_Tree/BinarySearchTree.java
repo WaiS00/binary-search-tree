@@ -1,149 +1,229 @@
-package binary_search_Tree;
+//Program to implement BinarySearchTree.
+package binary_search_tree2;
 
-import java.util.*;
+import java.util.Scanner;
+
 public class BinarySearchTree{
-	int data;   //data value
-	BinarySearchTree parentNode;  //points to the parent.
-	BinarySearchTree leftNode;    //points to left child.
-	BinarySearchTree rightNode;   //points to right child.	 
+	static class Node{
+		int key;     //data value
+		Node parent; //points to the parent node.
+		Node left;   //points to the right child.
+		Node right;  //points to the left child.
+		
+		public Node(int data){
+			this.key=data;
+			this.parent=null;
+			this.left=null;
+			this.right=null;
+		}
 
-	static int numofElements=0;   //number of elements in the Tree.
-	static BinarySearchTree rootNode; //root of the tree.
+	}
+
+	static Node root;   //root of the tree.
 
 	public BinarySearchTree(){
-		parentNode=null;
-		leftNode=null;
-		rightNode=null;
+		root=null;
 	}
 
-
-	//function to add elements in the Tree.	
-	public void add(int number){
-		System.out.println("Inserting data : " + number);
-		BinarySearchTree node = new BinarySearchTree();
-		node.data=number;
+	//function to find specific data elements in the tree.
+	public static Node find(int data){
+		Node temp=root;
+		Node prev=null;
 		
-		
-		if(numofElements==0){
-			rootNode=node;
-		}
-		else{
-			BinarySearchTree temp = rootNode;
-			while(temp!=null){
-				if(temp.data<number){
-					if(temp.rightNode==null){
-						temp.rightNode=node;
-						node.parentNode=temp;
-						break;
-					}
-					else{
-						temp=temp.rightNode;
-						continue;
-					}
-				}
-				if(temp.data>number){
-					if(temp.leftNode==null){
-						temp.leftNode=node;
-						node.parentNode=temp;
-						break;
-					}
-					else{
-						temp=temp.leftNode;
-						continue;
-					}
-				}
+		while(temp!=null){
+			prev=temp;
+			
+			if(temp.key==data){
+				return prev;
 			}
-		}
-		numofElements++;
-	}
-	
-	
-	//function to display the tree. Pattern can be = InOrder, PreOrder, PostOrder Traversal, Level-Order Traversal.
-	public void display(String pattern) throws Exception {
-		System.out.print("Tree : \n");
-		if(rootNode==null){
-			throw new Exception("Empty tree!");
-		}
-		//InOrder Traversal
-		if(pattern=="inOrder"){
-			inOrderDisplay(rootNode);
-			System.out.println("\n");
-		}
-		else{
-			//PreOrder Traversal.
-			if(pattern=="preOrder"){
-				preOrderDisplay(rootNode);
-				System.out.println("\n");
+			if(temp.key>data){
+				temp=temp.left;
 			}
 			else{
-				//PostOrder Traversal.
-				postOrderDisplay(rootNode);
-				System.out.println("\n");
+				temp=temp.right;
 			}
 		}
-	}				
-
-	//function for InOrder Traversal of Tree.
-	private BinarySearchTree inOrderDisplay(BinarySearchTree root){
-		if(root==null){
-			return root;
-		}
-		inOrderDisplay(root.leftNode);
-		System.out.print(root.data + " ");
-		inOrderDisplay(root.rightNode);
-		return root;
+		return prev;
 	}
 
-	//function for PreOrder Traversal of the Tree.
-	private BinarySearchTree preOrderDisplay(BinarySearchTree root){
-		if(root==null){
-			return root;
+	//function to add elements in the tree.
+	public static void add(int data){
+		System.out.println("Inserting data : " + data);
+		Node node = new Node(data);
+		Node positionNode = find(data);
+		if(positionNode==null){
+			root=node;
+			return;
 		}
-		System.out.print(root.data + " ");
-		inOrderDisplay(root.leftNode);
-		inOrderDisplay(root.rightNode);
-		return root;
-	}
+	
+		node.parent=positionNode;
 
-	//function for PostOrder Traversal of the Tree.
-	private BinarySearchTree postOrderDisplay(BinarySearchTree root){
-		if(root==null){
-			return root;
-		}
-		inOrderDisplay(root.leftNode);
-		inOrderDisplay(root.rightNode);
-		System.out.print(root.data + " ");
-		return root;
-	}
-
-	//function to find specific data in the Tree.
-	public boolean findNode(int number)throws Exception{
-		if(rootNode==null){
-			throw new Exception("Empty tree!");
-		}
-		BinarySearchTree temp = rootNode;
-		boolean result=false;
-		while(temp!=null){
-			if(temp.data==number){
-				result=true;
-				break;
-			}
-			if(temp.data>number){
-				temp=temp.leftNode;
-				continue;
-			}
-			if(temp.data<number){
-				temp=temp.rightNode;
-				continue;
-			}
-		}
-		if(result==false){
-			return false;
+		if(node.key>positionNode.key){
+			positionNode.right=node;
 		}
 		else{
-			return true;
+			positionNode.left=node;
 		}
 	}
-}
+
+	//function to find the next greater element from the given data value.
+	public static Node next(int data){
+		System.out.println("Find Next of : " + data);
+		if(root==null){
+			return null;
+		}
 		
+		Node node = find(data);
+		if(node.right!=null){
+			return leftDecesdant(node.right);
+		}
+		else{
+			return rightAncestor(node);
+		}
+	}
+
+	//function to find leftmost node.
+	private static Node leftDecesdant(Node node){
+		Node temp=node;
+		while(temp.left!=null){
+			temp=temp.left;
+		}
+		return temp;
+	}
+
+	//function to find the parent node with data value greater than the given node data value.	
+	private static Node rightAncestor(Node node){
+		Node temp=node.parent;
+		while(temp!=null){
+			if(temp.key>node.key){
+				break;
+			}
+			temp=temp.parent;
+		}
+		if(temp==null){
+			System.out.println("Max Element");
+			return node;
+		}
+		else{
+			return temp;
+		}
+	}
 	
+
+
+	//function to find the max data value in the tree.
+	public static Node maxNode(){
+		if(root==null){
+			return null;
+		}
+		Node temp=root;
+		while(temp.right!=null){
+			temp=temp.right;
+		}
+		return temp;
+	}
+
+	//function to find the min data value in the tree.
+	public static Node minNode(){
+		if(root==null){
+			return null;
+		}
+		Node temp = root;
+		while(temp.left!=null){
+			temp=temp.left;
+		}
+		return temp;
+	}
+
+	//function for InOrder Traversal of the tree.
+	private static void inorderTraversal(Node rootNode){
+		if(rootNode==null){
+			return;
+		}
+		inorderTraversal(rootNode.left);
+		System.out.print(rootNode.key + " ");
+		inorderTraversal(rootNode.right);
+	}
+
+	//function for PreOrder Traversal of the tree.
+	private static void preorderTraversal(Node rootNode){
+		if(rootNode==null){
+			return;
+		}
+		System.out.print(rootNode.key + " " );
+		preorderTraversal(rootNode.left);
+		preorderTraversal(rootNode.right);
+	}
+
+	//function for  PostOrder Traversal of the Tree.
+	private static void postorderTraversal(Node rootNode){
+		if(rootNode==null){
+			return;
+		}
+		postorderTraversal(rootNode.left);
+		postorderTraversal(rootNode.right);
+		System.out.print(rootNode.key + " ");
+	}
+
+	//function to display the tree.
+	public static void display(){
+		System.out.println();
+		System.out.println("Inorder Traversal");
+		inorderTraversal(root);
+
+		System.out.println();
+		System.out.println("PreOrder Traversal");
+		preorderTraversal(root);
+
+		System.out.println();
+		System.out.println("PostOrder Traversal");
+		postorderTraversal(root);
+
+		System.out.println();
+	}
+
+}
+
+		
+
+		
+		
+			
+			
+
+			
+			
+
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+							
