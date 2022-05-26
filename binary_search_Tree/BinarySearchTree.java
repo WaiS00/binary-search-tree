@@ -1,5 +1,5 @@
 //Program to implement BinarySearchTree.
-package binary_search_tree2;
+package binary_search_tree;
 
 import java.util.Scanner;
 
