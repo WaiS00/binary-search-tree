@@ -74,7 +74,7 @@ public class BinarySearchTree{
 
 	//function to find the next greater element from the given data value.
 	public static Node nextValue(int data){
-		System.out.println("Find Next of : " + data);
+		System.out.println("Find Next of " + data + " :");
 		if(root==null){
 			return null;
 		}
