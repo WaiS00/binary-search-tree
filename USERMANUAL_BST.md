@@ -1,3 +1,8 @@
+# CSC2103: Data Structures and Algorithms
+## Binary Search Tree User Manual
+
+<ins>Assignment - Total marks 20 Due: Week 12</ins>
+
 First of all, the main class of the code will exist in the “BinarySearchTreeImplementation.java” file. In Visual Studio Code, there will be a run and debug button on the top of the public static void main to allow the user to run and debug the code as shown in Figure 1.0. After the user has clicked on the run button, the system’s console will prompt the user to enter ten integers using a for-loop method that will prompt ten scanner that will scan the user’s response and data. 
 
 ![alt text](https://github.com/WaiS00/binary-search-tree/blob/main/usermanual_pics/Figure1.png?raw=true)
